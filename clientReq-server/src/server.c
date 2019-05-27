@@ -128,14 +128,14 @@ int main (int argc, char *argv[]) {
         //sleep(300);
 
         while(1) {
+            //pauses 30s before clearing again the db
+            sleep(30);
             //before accessing the db tries to get the semaphore (mutex)
             semOp(semdbid, 0, -1);
             //update shared memory deleting the old entries
             delEntry(db, length);
             //release the semaphore
             semOp(semdbid, 0, 1);
-            //pauses 30s before clearing again the db
-            sleep(30);
         }
     }
 
