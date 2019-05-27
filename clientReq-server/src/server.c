@@ -172,8 +172,10 @@ int main (int argc, char *argv[]) {
         else {
             knownService = 0;
             printf("%s communicating with the Server\n", request.userId);
-            //get the semaphore to access the shared memory segment containing the length od the db
+
+            //tries to get the semaphore to access the shared memory segments (mutex)
             semOp(semdbid, 0, -1);
+
             //new request, increase the number of entry to check if there is space in the db for the new entry
             (*length)++;
             //check if there is space
@@ -182,7 +184,6 @@ int main (int argc, char *argv[]) {
                 printf("[ERROR] Server db full.\n\tServer can't handle any more request!\n");
                 semOp(semdbid, 0, 1);
             } else {
-                semOp(semdbid, 0, 1);
                 serviceToLowerCase(&request);
                 printf(" ... Looking for service: %s ...\n", request.service);
                 fflush(stdout);
@@ -197,10 +198,9 @@ int main (int argc, char *argv[]) {
                         //encode the key based on the service requested and the time of the request
                         entry.key = encode(request.service, entry.timestamp);
                         response.key = entry.key;
-                        //before accessing the db tries to get the semaphore (mutex)
-                        semOp(semdbid, 0, -1);
                         //add the entry to the shared memory db
                         addEntry(db, entry, length);
+
                         //release the semaphore
                         semOp(semdbid, 0, 1);
                     }
