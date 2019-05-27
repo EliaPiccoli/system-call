@@ -42,7 +42,7 @@ int main (int argc, char *argv[]) {
     //read the key
     long long int serverKey = atollHex(argv[2]);
     if (serverKey == -1) {
-        printf("Invalid server key. Server generates only hexadecimal keys greater then zero.\n");
+        printf("Invalid server key.\nServer generates only hexadecimal keys greater then zero.\n");
         exit(1);
     }
 
@@ -115,7 +115,7 @@ int main (int argc, char *argv[]) {
             printf("\nSoon starting service: %s ... \n\n", service);
             //create the argument vector for the exec call
             char **argV = createArgVector(argc, argv);
-            char *s = (char *) malloc(sizeof(char)*9);
+            char *s = (char *) malloc(sizeof(char)*MAX_LEN);
             strcpy(s, "./");
             if (strcmp(service, services[0]) == 0) {
                 argV[0] = strcat(s, service);

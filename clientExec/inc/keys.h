@@ -15,6 +15,11 @@
 #define SHMLKEY 2
 
 /*
+ * define constant max length string which will contain the service name programm
+ */
+#define MAX_LEN 9
+
+/*
  * defining constant values of the services provided
  */
 char* services[] = {"stampa\0", "salva\0", "invia\0"};

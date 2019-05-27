@@ -166,7 +166,7 @@ int main (int argc, char *argv[]) {
     while(1) {
         int bR = read(sd, &request, sizeof(struct request_t));
         if (bR == -1)
-            break; //otherwise print wrong message
+            break;
         else if (bR != sizeof(struct request_t))
             printf("Bad request\n");
         else {
@@ -200,15 +200,15 @@ int main (int argc, char *argv[]) {
                         response.key = entry.key;
                         //add the entry to the shared memory db
                         addEntry(db, entry, length);
-
-                        //release the semaphore
-                        semOp(semdbid, 0, 1);
                     }
                 }
                 if (!knownService) {
                     response.key = encode(request.service, time(NULL));
                 }
                 strcpy(response.userId, request.userId);
+
+                //release the semaphore
+                semOp(semdbid, 0, 1);
 
                 //recreating the path to the clientFIFO based on his pid
                 sprintf(pathclientFIFO, "%s%d", clientFIFO, request.pid);

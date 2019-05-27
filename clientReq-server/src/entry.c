@@ -44,6 +44,7 @@ void delEntry(struct entry_t* shm, int* l) {
 void printdb(struct entry_t *shm, int* length) {
     printf("\nPrinting the db\n");
     for(int i=0; i<*length; i++) {
+        printf("-----------------\n");
         printf("User: %s\n", shm[i].user);
         printf("Key: %0llx\n", shm[i].key);
         printf("Timestamp: %d\n", (int)shm[i].timestamp);
