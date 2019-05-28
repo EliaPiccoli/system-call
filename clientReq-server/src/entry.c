@@ -7,8 +7,6 @@
 #include "errExit.h"
 #include "entry.h"
 
-#define MAX_TIME 300
-
 void swap(struct entry_t* shm, int x, int y) {
     struct entry_t tmp = *(shm + x);
     *(shm + x) = *(shm + y);
@@ -44,7 +42,7 @@ void delEntry(struct entry_t* shm, int* l) {
 void printdb(struct entry_t *shm, int* length) {
     printf("\nPrinting the db\n");
     for(int i=0; i<*length; i++) {
-        printf("-----------------\n");
+        printf("-------------------\n");
         printf("User: %s\n", shm[i].user);
         printf("Key: %0llx\n", shm[i].key);
         printf("Timestamp: %d\n", (int)shm[i].timestamp);

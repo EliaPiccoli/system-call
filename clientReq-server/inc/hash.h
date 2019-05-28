@@ -12,7 +12,7 @@
 int weight(const char* s);
 
 /*
- * encoding of the key, given the asked service and the creation time
+ * encoding of the key, given the asked service and the creationTime
  */
 long long int encode(const char* service, time_t creationTime);
 

@@ -22,7 +22,7 @@ long long int encode(const char* service, time_t creationTime) {
     printf("Generated key: %llu -> %0llx\n", key, key);
 
     //since we use the timestamp to encode the key, and timestamp is the factor which makes all the keys unique
-    //from creating one key and going to the next one we set a second of pause
+    //from creating one key going to the next one, we set a second of pause to maintain the uniqueness of the keys
     sleep(1);
 
     return key;

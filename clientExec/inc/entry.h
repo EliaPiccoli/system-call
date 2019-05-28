@@ -13,7 +13,7 @@ struct entry_t {
 };
 
 /*
- * function that search into db if there is an entry which contains the value of user and serverKey
+ * function that search into db if there is an entry which contains (user, serverKey)
  * return values:
  *      (>= 0) if there is an entry (position of the entry)
  *      -1 NO user - NO key

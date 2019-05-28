@@ -3,11 +3,14 @@
 #ifndef HASH_H
 #define HASH_H
 
+/*
+ * hashing constant values
+ */
 #define K 1<<29
 #define HEX 16
 
 /*
- * check if the weight value is the encoding of the service in the string s
+ * check if the weight value is the encoding of the service s
  */
 int try(char* s, int weight);
 
@@ -17,7 +20,7 @@ int try(char* s, int weight);
 const char* findService(int service, char* services[], int numService);
 
 /*
- * function that from the generated key recreates the service
+ * function that from the generated key recreates the service weight
  */
 const char* decode(long long int key, struct entry_t e, char* serv[], int num);
 

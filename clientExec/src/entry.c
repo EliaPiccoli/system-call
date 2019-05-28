@@ -34,7 +34,7 @@ int search(struct entry_t* shm, int* length, char* user, long long int serverKey
 }
 
 void delEntry(struct entry_t* shm, int* length, int pos) {
-    //replace the pos-th value with the last one, we are losing its value but it's ok because we want to delete it
+    //replace the pos-th value with the last one
     shm[pos] = shm[*length-1];
 
     //decrement the number of entries int the db

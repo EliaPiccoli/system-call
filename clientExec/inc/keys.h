@@ -15,12 +15,12 @@
 #define SHMLKEY 2
 
 /*
- * define constant max length string which will contain the service name programm
+ * define constant max length string which will contain the service executable name
  */
 #define MAX_LEN 9
 
 /*
- * defining constant values of the services provided
+ * defining values of the provided services
  */
 char* services[] = {"stampa\0", "salva\0", "invia\0"};
 int numService = sizeof(services)/sizeof(char *);

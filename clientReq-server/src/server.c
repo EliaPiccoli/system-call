@@ -57,7 +57,7 @@ void sigHandler(int sig) {
         if (shmctl(shmdbid, IPC_RMID, NULL) == -1)
             errExit("shmctl failed");
 
-        //wait termination of keyManager and deallocates his structure -> no zombie
+        //wait termination of keyManager and deallocates his structure
         while(wait(NULL) == -1);
 
         printf("Server turning off\n");
@@ -94,7 +94,7 @@ int main (int argc, char *argv[]) {
     if(db == (struct entry_t *) NULL)
         errExit("shmat failed");
 
-    //create shared memory which will use the server and keyManager to know how many entries there are in the db
+    //create shared memory to know how many entries there are in the db [0 - MAX_CLIENT]
     shmdbid = shmget(SHMLKEY, sizeof(int), IPC_CREAT | IPC_EXCL | S_IRUSR | S_IWUSR);
     if(shmdbid == -1)
         errExit("shmget failed");
@@ -104,7 +104,7 @@ int main (int argc, char *argv[]) {
     if(length == (int *) NULL)
         errExit("shmat failed");
 
-    //set initial size of db
+    //set initial size
     *length = 0;
 
     //creating semaphore to access the shared memory db
@@ -124,8 +124,8 @@ int main (int argc, char *argv[]) {
         //code that will be executed by KeyManager
         printf("Starting keyManager\n");
 
-        //for the first five minutes will wait, since it won't find any key to delete
-        //sleep(300);
+        //for the first MAX_TIME seconds will wait, since it won't find any key to delete
+        //sleep(MAX_TIME);
 
         while(1) {
             //pauses 30s before clearing again the db
@@ -151,7 +151,7 @@ int main (int argc, char *argv[]) {
     if(sd == -1)
         errExit("open failed");
 
-    //open in writing mode th serverFIFO so it doesn't see EOF even if there are no clientReq processes
+    //open in writing mode the serverFIFO so it doesn't see EOF even if there are no clientReq processes
     fakesd = open(serverFIFO, O_WRONLY);
     if(fakesd == -1)
         errExit("open failed");

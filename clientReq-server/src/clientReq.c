@@ -20,8 +20,8 @@ extern char* services[];
 extern int numService;
 
 void welcome() {
-    printf("Hi and welcome to Client Request!!\n");
-    printf("Ask for a service and the server will provide you the key to access!\n");
+    printf("Hi and welcome to Client Request!\n");
+    printf("Ask for a service and the server will provide you the key to access.\n");
     printf("The provided services are:\n");
     for(int i=0; i<numService; i++)
         printf("\t> %s\n", services[i]);
@@ -33,9 +33,9 @@ int main (int argc, char *argv[]) {
 
     //get the userID and the service and save them in the struct request_t
     struct request_t request;
-    printf("Insert your User Identifier:\t");
+    printf("Insert your UserIdentifier [NO space]:\t");
     scanf("%99s", request.userId);
-    printf("Insert the Service you want to use:\t");
+    printf("Insert the Service you want to access:\t");
     scanf("%6s", request.service);
 
     //create the client fifo using the base clientFIFO path and adding his pid

@@ -1,5 +1,6 @@
-#include "entry.h"
 #include <stdlib.h>
+
+#include "entry.h"
 
 #ifndef KEYS_H
 #define KEYS_H

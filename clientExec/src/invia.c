@@ -42,11 +42,9 @@ int main (int argc, char *argv[]) {
     }
     strcat(msg.message, "\0");
 
-    /*
-        //Print to terminal the message
-        printf("mtype: %ld\n", msg.mtype);
-        printf("message: %s\n", msg.message);
-    */
+    //Print to terminal the message
+    //printf("mtype: %ld\n", msg.mtype);
+    //printf("message: %s\n", msg.message);
 
     //calculate msg size and them sends it to the msq
     size_t msgSize = sizeof(struct message_t) - sizeof(long);

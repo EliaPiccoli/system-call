@@ -81,7 +81,7 @@ int main (int argc, char *argv[]) {
     char service[7];
     //if (user, key) was a valid couple, decode the key to get the asked service
     if (entry >= 0) {
-        strcpy(service, decode(serverKey, db[entry], services, numService));
+        strcpy(service, decode(serverKey, *(db + entry), services, numService));
         //deletes the key from the shared memory segment
         delEntry(db, dblength, entry);
     }

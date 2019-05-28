@@ -4,6 +4,11 @@
 #define ENTRY_H
 
 /*
+ * maximum number of second to consider a key valid
+ */
+#define MAX_TIME 300
+
+/*
  * struct containing the entry in our shared memory
  */
 struct entry_t {
@@ -18,12 +23,12 @@ struct entry_t {
 void addEntry(struct entry_t* shm, struct entry_t e, int* l);
 
 /*
- * remove all the entries in the db with a timestamp older than 5 minutes
+ * remove all the entries in the db with a timestamp older than MAX_TIME seconds
  */
 void delEntry(struct entry_t* shm, int* l);
 
 /*
- * swap two entries int the db
+ * swap two entries in the db
  */
 void swap(struct entry_t* shm, int x, int y);
 
