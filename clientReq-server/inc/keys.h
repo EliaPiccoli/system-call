@@ -6,8 +6,10 @@
 
 /*
  * define max number of entries of the db and a macro to know if the db is full or not
+ * Our services creates 1 key/s, our keyManager deletes keys older than 300 seconds, so the maximum amount of entries in
+ * the shared memory will be MAX_CLIENT
  */
-#define MAX_CLIENT 1000
+#define MAX_CLIENT 300
 #define DB_SPACE(x) MAX_CLIENT-(x)
 
 /*

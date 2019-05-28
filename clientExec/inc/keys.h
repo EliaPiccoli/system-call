@@ -4,7 +4,7 @@
 /*
  * define max number of entries of the db
  */
-#define MAX_CLIENT 1000
+#define MAX_CLIENT 300
 
 /*
  * define constant values for the keys of the shared memory segment and the semaphore
