@@ -22,8 +22,8 @@ int main (int argc, char *argv[]) {
     }
 
     int msgKey = atoi(argv[1]);
-    if(msgKey < 0) {
-        printf("message_key should be greater than zero\n");
+    if(msgKey <= 0) {
+        printf("message_key should be an integer greater than zero\n");
         return 1;
     }
 
