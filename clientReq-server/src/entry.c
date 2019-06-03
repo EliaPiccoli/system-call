@@ -40,12 +40,13 @@ void delEntry(struct entry_t* shm, int* l) {
 }
 
 void printdb(struct entry_t *shm, int* length) {
+    time_t now = time(NULL);
     printf("\nPrinting the db\n");
     for(int i=0; i<*length; i++) {
         printf("-------------------\n");
         printf("User: %s\n", shm[i].user);
         printf("Key: %0llx\n", shm[i].key);
-        printf("Timestamp: %d\n", (int)shm[i].timestamp);
+        printf("Timestamp: %d (SFC: %d)\n", (int)shm[i].timestamp, (int)(now-shm[i].timestamp));
     }
     printf("\n");
 }
