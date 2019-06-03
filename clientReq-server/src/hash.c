@@ -21,7 +21,7 @@ long long int encode(const char* service, time_t creationTime) {
     long long int key = (weight(service)*((long long int) creationTime))^creationTime;
     printf("Generated key: %llu -> %0llx\n", key, key);
 
-    //since we use the timestamp to encode the key, and timestamp is the factor which makes all the keys unique
+    //since timestamp is used to encode the key, and timestamp is the factor which makes all the keys unique
     //from creating one key going to the next one, we set a second of pause to maintain the uniqueness of the keys
     sleep(1);
 

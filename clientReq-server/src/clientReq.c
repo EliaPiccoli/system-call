@@ -73,8 +73,10 @@ int main (int argc, char *argv[]) {
         printf("Bad response\n");
     else {
         printf("\n");
-        printf("Key:\t%0llx\n", response.key);
-        printf("UserId:\t%s\n", response.userId);
+        if(response.key > 0) {
+            printf("Key:\t%0llx\n", response.key);
+            printf("UserId:\t%s\n", response.userId);
+        } else printf("Server can't handle the request!\nMost likely the db is full, try again in a few seconds.\n");
     }
 
     //close client file descriptor and remove the clientFIFO

@@ -120,7 +120,9 @@ int main (int argc, char *argv[]) {
 
     //create a children -> keyManager
     pid = fork();
-    if(pid == 0) {
+    if(pid == -1)
+        errExit("fork failed");
+    else if(pid == 0) {
         //code that will be executed by KeyManager
         printf("Starting keyManager\n");
 
@@ -173,7 +175,7 @@ int main (int argc, char *argv[]) {
             knownService = 0;
             printf("%s communicating with the Server\n", request.userId);
 
-            //tries to get the semaphore to access the shared memory segments (mutex)
+            //tries to acquire the semaphore to access the shared memory segments (mutex)
             semOp(semdbid, 0, -1);
 
             //new request, increase the number of entry to check if there is space in the db for the new entry
@@ -182,7 +184,7 @@ int main (int argc, char *argv[]) {
             if (DB_SPACE(*length) < 0) {
                 (*length)--;
                 printf("[ERROR] Server db full.\n\tServer can't handle any more request!\n");
-                semOp(semdbid, 0, 1);
+                response.key = -1;
             } else {
                 serviceToLowerCase(&request);
                 printf(" ... Looking for service: %s ...\n", request.service);
@@ -206,26 +208,26 @@ int main (int argc, char *argv[]) {
                     response.key = encode(request.service, time(NULL));
                 }
                 strcpy(response.userId, request.userId);
-
-                //release the semaphore
-                semOp(semdbid, 0, 1);
-
-                //recreating the path to the clientFIFO based on his pid
-                sprintf(pathclientFIFO, "%s%d", clientFIFO, request.pid);
-
-                //open in writing mode the clientFIFO
-                cd = open(pathclientFIFO, O_WRONLY);
-                if (cd == -1)
-                    errExit("open failed");
-
-                //write the response in the clientFIFO
-                if (write(cd, &response, sizeof(struct response_t)) != sizeof(struct response_t))
-                    errExit("write failed");
-
-                //close file descriptor to clientFIFO
-                if (close(cd) == -1)
-                    errExit("close failed");
             }
+
+            //release the semaphore
+            semOp(semdbid, 0, 1);
+
+            //recreating the path to the clientFIFO based on his pid
+            sprintf(pathclientFIFO, "%s%d", clientFIFO, request.pid);
+
+            //open in writing mode the clientFIFO
+            cd = open(pathclientFIFO, O_WRONLY);
+            if (cd == -1)
+                errExit("open failed");
+
+            //write the response in the clientFIFO
+            if (write(cd, &response, sizeof(struct response_t)) != sizeof(struct response_t))
+                errExit("write failed");
+
+            //close file descriptor to clientFIFO
+            if (close(cd) == -1)
+                errExit("close failed");
         }
     }
 }
