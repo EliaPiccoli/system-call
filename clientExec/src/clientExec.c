@@ -22,10 +22,10 @@ extern int numService;
 //function that creates the argument vector for the exec syscall
 char** createArgVector(int n, char** a) {
     char** argVector;
-    //length = n - 3 + 1(name)
-    int length = n - 2;
+    //length = n - 3 + 1(name) + 1(NULL)
+    int length = n - 1;
     argVector = (char **) malloc(sizeof(char *)*length);
-    for(int i=1; i<length-1; i++)
+    for(int i=1; i<length; i++)
         argVector[i] = *(a + i + 2);
 
     return argVector;
