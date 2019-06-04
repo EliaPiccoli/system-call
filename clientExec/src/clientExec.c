@@ -39,7 +39,7 @@ int main (int argc, char *argv[]) {
         return 1;
     }
 
-    //read the key
+    //read & decode the key
     long long int serverKey = atollHex(argv[2]);
     if (serverKey == -1) {
         printf("Invalid server key.\nServer generates only hexadecimal keys greater then zero.\n");
@@ -112,27 +112,23 @@ int main (int argc, char *argv[]) {
             exit(1);
         }
         default: {
-            printf("\nSoon starting service: %s ... \n\n", service);
             //create the argument vector for the exec call
             char **argV = createArgVector(argc, argv);
-            char *s = (char *) malloc(sizeof(char)*MAX_LEN);
-            strcpy(s, "./");
-            if (strcmp(service, services[0]) == 0) {
-                argV[0] = strcat(s, service);
-                free(s);
-                if (execvp("./stampa", argV) == -1)
-                    errExit("execvp failed");
-            } else if (strcmp(service, services[1]) == 0) {
-                argV[0] = strcat(s, service);
-                free(s);
-                if (execvp("./salva", argV) == -1)
-                    errExit("execvp failed");
-            } else {
-                argV[0] = strcat(s, service);
-                free(s);
-                if (execvp("./invia", argV) == -1)
-                    errExit("execvp failed");
+            argV[0] = (char *) malloc(sizeof(char)*MAX_LEN);
+            strcpy(argV[0], "./");
+            //iterate over all the services in order to find the chosen one
+            for(int i=0; i<numService; i++) {
+                if(strcmp(service, services[i]) == 0) {
+                    printf("\nSoon starting service: %s ... \n\n", service);
+
+                    strcat(argV[0], service);
+                    if(execvp(argV[0], argV) == -1)
+                        errExit("execvp failed");
+                }
             }
+            //no service found -> impossible!
+            printf("Something went wrong!\n");
+            exit(1);
         }
     }
 }
