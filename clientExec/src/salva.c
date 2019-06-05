@@ -42,7 +42,9 @@ int main (int argc, char *argv[]) {
     if(close(fd) == -1)
         errExit("close failed");
 
-    printf("All elements saved in file: %s\n", argv[1]);
+    if(argc - 2 > 0)
+        printf("All %d elements saved in file: %s\n", argc - 2, argv[1]);
+    else printf("Nothing was added to the file: %s\n", argv[1]);
 
     return 0;
 }

@@ -40,5 +40,5 @@ void delEntry(struct entry_t* shm, int* length, int pos) {
     //decrement the number of entries int the db
     (*length)--;
 
-    printf("Key removed from db\n");
+    printf("Entry removed from db\n");
 }
