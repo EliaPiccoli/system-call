@@ -7,28 +7,31 @@
 #include "hash.h"
 #include "entry.h"
 
-int try(char* s, int weight) {
-    for(int i=0; i<strlen(s); i++)
-        weight ^= *(s + i);
+extern char* services[];
+extern int numService;
 
-    return weight == K;
+int try(char* s, int w) {
+    for(int i=0; i<strlen(s); i++)
+        w ^= *(s + i);
+
+    return w == K;
 }
 
-const char* findService(int service, char* services[], int numService) {
+const char* findService(int weight) {
     for(int i=0; i<numService; i++)
-        if(try(services[i], service))
+        if(try(services[i], weight))
             return services[i];
 
     return NULL;
 }
 
-const char* decode(long long int key, struct entry_t e, char* serv[], int num) {
+const char* decode(long long int key, struct entry_t e) {
     printf("Decoding key ...\n");
 
     long long int tmp = e.key^e.timestamp;
     int service = tmp/e.timestamp;
 
-    return findService(service, serv, num);
+    return findService(service);
 }
 
 long long int atollHex(const char* s) {

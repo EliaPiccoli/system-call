@@ -47,7 +47,7 @@ void printdb(struct entry_t *shm, int* length) {
             printf("-------------------\n");
             printf("User: %s\n", shm[i].user);
             printf("Key: %0llx\n", shm[i].key);
-            printf("Timestamp: %d (SFC: %d)\n", (int) shm[i].timestamp, (int) (now - shm[i].timestamp));
+            printf("Timestamp: %d [sfc: %d]\n", (int) shm[i].timestamp, (int) (now - shm[i].timestamp));
         }
     } else printf("{ db empty }\n");
     printf("\n");

@@ -12,20 +12,21 @@
 /*
  * check if the weight value is the encoding of the service s
  */
-int try(char* s, int weight);
+int try(char* s, int w);
 
 /*
  * iterate over all the provided services to find the correct one
  */
-const char* findService(int service, char* services[], int numService);
+const char* findService(int weight);
 
 /*
  * function that from the generated key recreates the service weight
  */
-const char* decode(long long int key, struct entry_t e, char* serv[], int num);
+const char* decode(long long int key, struct entry_t e);
 
 /*
  * function that simulates the behavior of atoll, receiving an hexadecimal string number
+ * return -1 on error
  */
 long long int atollHex(const char *);
 
