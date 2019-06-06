@@ -18,15 +18,13 @@ int search(struct entry_t* shm, int* length, char* user, long long int serverKey
             return i;
         //wrong key
         else if(strcmp(shm[i].user, user) == 0) {
-            if (exit_value == -3)
-                exit_value = -4;
-            else exit_value = -2;
+            exit_value = -2;
         }
-        //wrong user
+        //key found but with another user, since the keys are unique can't find any other entry
         else if(shm[i].key == serverKey) {
             if(exit_value == -2)
-                exit_value = -4;
-            else exit_value = -3;
+                return -4;
+            else return -3;
         }
     }
 
