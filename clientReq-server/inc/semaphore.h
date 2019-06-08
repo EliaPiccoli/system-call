@@ -1,5 +1,5 @@
-#ifndef _SEMAPHORE_HH
-#define _SEMAPHORE_HH
+#ifndef SEMAPHORE_H
+#define SEMAPHORE_H
 
 /*
  * definition of the union semun
@@ -16,4 +16,4 @@
  */
 void semOp (int semid, unsigned short sem_num, short sem_op);
 
-#endif
+#endif //SEMAPHORE_H
