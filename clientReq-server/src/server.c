@@ -188,9 +188,9 @@ int main (int argc, char *argv[]) {
             } else {
                 serviceToLowerCase(&request);
                 printf(" ... Looking for service: %s ...\n", request.service);
-                fflush(stdout);
                 for (int i = 0; i < numService; i++) {
                     if (strcmp(request.service, services[i]) == 0) {
+                        printf(" ... service found ... ");
                         //we have found a knownService
                         knownService = 1;
 
@@ -205,6 +205,7 @@ int main (int argc, char *argv[]) {
                     }
                 }
                 if (!knownService) {
+                    printf(" ... service not found ... ");
                     response.key = encode(request.service, time(NULL));
                 }
                 strcpy(response.userId, request.userId);

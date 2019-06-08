@@ -16,7 +16,7 @@ int weight(const char* s) {
 }
 
 long long int encode(const char* service, time_t creationTime) {
-    printf("Encoding key ...\n");
+    printf("encoding key ...\n");
 
     long long int key = (weight(service)*((long long int) creationTime))^creationTime;
     printf("Generated key: %llu -> %0llx\n", key, key);
