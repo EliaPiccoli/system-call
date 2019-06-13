@@ -17,7 +17,7 @@ int main (int argc, char *argv[]) {
     //check command line input argument
     if(argc < 2) {
         printf("[Error] Service Salva failed to execute\n");
-        printf("Usage: %s filename ...\n", *argv);
+        printf("\tUsage: %s filename ...\n", *argv);
         return 1;
     }
 

@@ -18,7 +18,7 @@ int main (int argc, char *argv[]) {
     //check command line arguments
     if(argc < 2) {
         printf("[Error] Service Invia failed to execute\n");
-        printf("Usage: %s msgkey ...\n", *argv);
+        printf("\tUsage: %s msgkey ...\n", *argv);
         return 1;
     }
 
