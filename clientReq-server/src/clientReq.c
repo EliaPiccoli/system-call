@@ -38,33 +38,27 @@ int main (int argc, char *argv[]) {
     printf("Insert the Service you want to access:\t");
     scanf("%6s", request.service);
 
-    //create the client fifo using the base clientFIFO path and adding his pid
     char pathclientFIFO[25];
     pid_t myPid = getpid();
     request.pid = myPid;
     sprintf(pathclientFIFO, "%s%d", clientFIFO, myPid);
 
-    //create clientFIFO
     if(mkfifo(pathclientFIFO, S_IRUSR | S_IWUSR) == -1)
         errExit("mkfifo failed");
 
-    //open in writing mode the serverFIFO
     int sd = open(serverFIFO, O_WRONLY);
     if(sd == -1)
         errExit("open failed");
 
-    //write the message to the serverFIFO
     if(write(sd, &request, sizeof(struct request_t)) != sizeof(struct request_t))
         errExit("write failed");
 
     printf("\nSending request to server waiting for response...\n");
 
-    //open in reading mode the clientFIFO
     int cd = open(pathclientFIFO, O_RDONLY);
     if(cd == -1)
         errExit("open failed");
 
-    //read the response from clientFIFO
     struct response_t response;
     int bR = read(cd, &response, sizeof(struct response_t));
     if(bR == -1)
@@ -79,7 +73,6 @@ int main (int argc, char *argv[]) {
         } else printf("Server can't handle the request!\nMost likely the db is full, try again in a few seconds.\n");
     }
 
-    //close client file descriptor and remove the clientFIFO
     if(close(cd) == -1)
         errExit("close failed");
     if(unlink(pathclientFIFO) == -1)

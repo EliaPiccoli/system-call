@@ -28,14 +28,13 @@ int main (int argc, char *argv[]) {
         return 1;
     }
 
-    //get the id of the existing message_queue
     int msqid = msgget(msgKey, S_IWUSR);
     if(msqid == -1)
         errExit("msgget failed");
 
     //creating the message
     struct message_t msg;
-    msg.mtype = rand()%100 + 1; //+1 because mtype must be greater then 0
+    msg.mtype = rand()%100 + 1;
     strcpy(msg.message, "");
     for(int i=0; i<argc-2; i++) {
         strncat(msg.message, *(argv + i + 2), STR_SIZE(*(argv + i + 2)));

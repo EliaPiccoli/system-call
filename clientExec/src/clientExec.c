@@ -45,32 +45,26 @@ int main (int argc, char *argv[]) {
         exit(1);
     }
 
-    //get the id of the semaphore to access the db
     int semdbid = semget(SEMDBKEY, 1, S_IRUSR | S_IWUSR);
     if (semdbid == -1)
         errExit("semget failed");
 
-    //get the id of the shared memory db
     int shmid = shmget(SHMDBKEY, sizeof(struct entry_t)*MAX_CLIENT, S_IRUSR | S_IWUSR);
     if (shmid == -1)
         errExit("shmget failed");
 
-    //attach the shared memory db segment
     struct entry_t *db = (struct entry_t *) shmat(shmid, NULL, 0);
     if (db == (struct entry_t *) NULL)
         errExit("shmat failed");
 
-    //get the id of the shared memory which contains the number of entries of the db
     int shmdbid = shmget(SHMLKEY, sizeof(int), S_IRUSR | S_IWUSR);
     if (shmdbid == -1)
         errExit("shmget failed");
 
-    //attach the shared memory segment which contains the length
     int *dblength = (int *) shmat(shmdbid, NULL, 0);
     if (dblength == (int *) NULL)
         errExit("shmat failed");
 
-    //before searching into the server, tries to get the semaphore to access the db
     semOp(semdbid, 0, -1);
 
     //variable entry will contain the position into the db of the entry that correspond to the client
@@ -81,11 +75,9 @@ int main (int argc, char *argv[]) {
     //if (user, key) was a valid couple, decode the key to get the asked service
     if (entry >= 0) {
         strcpy(service, decode(serverKey, *(db + entry)));
-        //deletes the key from the shared memory segment
         delEntry(db, dblength, entry);
     }
 
-    //release the semaphore
     semOp(semdbid, 0, 1);
 
     //switch over entry to know if we have found an entry or we have errors
@@ -119,7 +111,6 @@ int main (int argc, char *argv[]) {
             for(int i=0; i<numService; i++) {
                 if(strcmp(service, services[i]) == 0) {
                     printf("\nSoon starting service: %s ... \n\n", service);
-
                     strcat(argV[0], service);
                     if(execvp(argV[0], argV) == -1)
                         errExit("execvp failed");

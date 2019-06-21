@@ -21,8 +21,6 @@ int main (int argc, char *argv[]) {
         return 1;
     }
 
-    //open the file in wr-only
-    //use append in case various processes want to send info to the same file
     int fd = open(argv[1], O_WRONLY | O_CREAT | O_APPEND, S_IRWXU);
     if(fd == -1)
         errExit("open failed");
