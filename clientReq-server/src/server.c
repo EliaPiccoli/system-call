@@ -181,7 +181,7 @@ int main (int argc, char *argv[]) {
                     }
                 }
                 if (!knownService) {
-					(*length)--;
+		    (*length)--;
                     printf(" ... service not found ... ");
                     response.key = encode(request.service, time(NULL));
                 }
